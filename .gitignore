@@ -1,0 +1,9 @@
+.env
+/vendor/
+/tools/*.jar
+/data/*
+!/data/.gitkeep
+.DS_Store
+.vscode/
+.idea/
+*.log

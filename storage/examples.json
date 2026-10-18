@@ -1,0 +1,142 @@
+[
+  {
+    "id": 1,
+    "title": "基本的な例",
+    "theme": "シーケンス図",
+    "prompt": "alice と bob の会話を表すシーケンス図。alice が bob に hello と送り、bob は alice に ok と返信する。",
+    "uml": "@startuml\nAlice -> Bob: hello\nBob --> Alice: ok\n@enduml"
+  },
+  {
+    "id": 2,
+    "title": "休暇予約の業務",
+    "theme": "シーケンス図",
+    "prompt": "利用者は予約システムに空室検索を依頼する。予約システムはホテルDBから空室を照会する。ホテルDBが候補を返し、予約システムが利用者に候補を返す。",
+    "uml": "@startuml\nactor Customer\nparticipant BookingSystem\ndatabase HotelDB\nCustomer -> BookingSystem: Search available rooms\nBookingSystem -> HotelDB: Query availability\nHotelDB --> BookingSystem: Available rooms\nBookingSystem --> Customer: Show results\n@enduml"
+  },
+  {
+    "id": 3,
+    "title": "矢印の種類を覚える",
+    "theme": "シーケンス図",
+    "prompt": "Alice と Bob が同期メッセージ、返答、非同期メッセージを交換する。",
+    "uml": "@startuml\nAlice -> Bob: Request\nBob --> Alice: Response\nAlice ->> Bob: Notification\n@enduml"
+  },
+  {
+    "id": 4,
+    "title": "すべての操作を含めたチャート",
+    "theme": "シーケンス図",
+    "prompt": "アクターがサービスを呼び、サービスはストレージを照会し、条件に応じて成功または失敗を返す。",
+    "uml": "@startuml\nactor User\nparticipant Service\ndatabase Store\nUser -> Service: Submit\nService -> Store: Lookup\nStore --> Service: Result\nalt found\n  Service --> User: Success\nelse not found\n  Service --> User: Not found\nend\n@enduml"
+  },
+  {
+    "id": 5,
+    "title": "ライフラインの活性化",
+    "theme": "シーケンス図",
+    "prompt": "alice、bob、bill、georgeを使ったシーケンス図。activate / deactivate による活性期間、create / destroyによるオブジェクトの生成破棄を表す。",
+    "uml": "@startuml\nparticipant alice\nparticipant bob\nparticipant bill\nalice -> bob: hello\nactivate bob\nbob -> bill: self call\nactivate bill\nbill --> bob: success\ndeactivate bill\nbob -> bob: another call\ncreate george\nbob -> george: create\nbob -> george: hello\ngeorge --> bob: response\ndestroy george\nbob --> alice: done\ndeactivate bob\n@enduml"
+  },
+  {
+    "id": 6,
+    "title": "ログイン画面のユースケース",
+    "theme": "ユースケース図",
+    "prompt": "利用者はログインとプロフィール閲覧ができる。管理者は利用者管理ができる。",
+    "uml": "@startuml\nleft to right direction\nactor User\nactor Admin\nrectangle Portal {\n  usecase \"Log in\" as Login\n  usecase \"View profile\" as Profile\n  usecase \"Manage users\" as Manage\n}\nUser --> Login\nUser --> Profile\nAdmin --> Manage\n@enduml"
+  },
+  {
+    "id": 7,
+    "title": "図書管理ドメイン",
+    "theme": "クラス図",
+    "prompt": "Bookクラスにはtitle、authorがあり、LibraryクラスはBookを複数管理する。",
+    "uml": "@startuml\nclass Book {\n  +title: String\n  +author: String\n  +getSummary(): String\n}\nclass Library {\n  +name: String\n  +addBook(book: Book): void\n}\nLibrary \"1\" o-- \"*\" Book : contains\n@enduml"
+  },
+  {
+    "id": 8,
+    "title": "注文処理のクラス図",
+    "theme": "クラス図",
+    "prompt": "Orderにはidとtotalがある。Customerが複数のOrderを保持する。",
+    "uml": "@startuml\nclass Customer {\n  +name: String\n}\nclass Order {\n  +id: int\n  +total: decimal\n}\nCustomer \"1\" -- \"0..*\" Order : places\n@enduml"
+  },
+  {
+    "id": 9,
+    "title": "購入フロー",
+    "theme": "アクティビティ図",
+    "prompt": "開始、カートに追加、在庫を確認し、在庫ありなら決済、なければ終了。",
+    "uml": "@startuml\nstart\n:Add item to cart;\n:Check inventory;\nif (In stock?) then (yes)\n  :Pay;\n  :Confirm order;\nelse (no)\n  :Show out-of-stock message;\nendif\nstop\n@enduml"
+  },
+  {
+    "id": 10,
+    "title": "認証の状態遷移",
+    "theme": "状態図",
+    "prompt": "初期状態から未認証、認証中、認証済み、失敗状態へ遷移する。",
+    "uml": "@startuml\n[*] --> LoggedOut\nLoggedOut --> Authenticating : login\nAuthenticating --> LoggedIn : success\nAuthenticating --> Error : failure\nError --> LoggedOut : retry\nLoggedIn --> LoggedOut : logout\n@enduml"
+  },
+  {
+    "id": 11,
+    "title": "サービスのコンポーネント構成",
+    "theme": "コンポーネント図",
+    "prompt": "フロントエンドからAPIにアクセスし、APIがDBを利用する。",
+    "uml": "@startuml\ncomponent Frontend\ncomponent API\ndatabase Database\nFrontend --> API : HTTPS\nAPI --> Database : SQL\n@enduml"
+  },
+  {
+    "id": 12,
+    "title": "サーバーのデプロイ構成",
+    "theme": "デプロイ図",
+    "prompt": "ブラウザからWebサーバーを経由してデータベースにアクセスする。",
+    "uml": "@startuml\nnode \"Client\" {\n  artifact Browser\n}\nnode \"Application Server\" {\n  artifact WebApp\n}\ndatabase \"Database\" as DB\nBrowser --> WebApp : HTTPS\nWebApp --> DB : SQL\n@enduml"
+  },
+  {
+    "id": 13,
+    "title": "インフラネットワーク",
+    "theme": "ネットワーク図",
+    "prompt": "PCからスイッチ、ルーターを経由しサーバーにつながるネットワークを図示する。",
+    "uml": "@startuml\nnode PC\nnode Switch\nnode Router\nnode Server\nPC -- Switch\nSwitch -- Router\nRouter -- Server\n@enduml"
+  },
+  {
+    "id": 14,
+    "title": "リリース工程のガントチャート",
+    "theme": "ガントチャート",
+    "prompt": "設計を5日、実装を10日、テストを4日実施する。",
+    "uml": "@startgantt\nProject starts 2026-10-01\n[Design] lasts 5 days\n[Development] lasts 10 days\n[Testing] lasts 4 days\n[Development] starts at [Design]'s end\n[Testing] starts at [Development]'s end\n@endgantt"
+  },
+  {
+    "id": 15,
+    "title": "設計アイデアのマインドマップ",
+    "theme": "マインドマップ",
+    "prompt": "サービス設計から機能、品質、運用へ枝分かれする。",
+    "uml": "@startmindmap\n* Service design\n** Features\n*** Editor\n*** Preview\n** Quality\n*** Security\n*** Tests\n** Operations\n*** Monitoring\n@endmindmap"
+  },
+  {
+    "id": 16,
+    "title": "データ処理パイプライン",
+    "theme": "シーケンス図",
+    "prompt": "利用者、API、Worker、Databaseの通信を表現する。",
+    "uml": "@startuml\nactor User\nparticipant API\nparticipant Worker\ndatabase DB\nUser -> API: Submit job\nAPI -> Worker: Dispatch\nWorker -> DB: Save result\nDB --> Worker: OK\nWorker --> API: Completed\nAPI --> User: Status\n@enduml"
+  },
+  {
+    "id": 17,
+    "title": "継承とインターフェース",
+    "theme": "クラス図",
+    "prompt": "Animal抽象クラスをDogとCatが継承し、Soundableインターフェースを実装する。",
+    "uml": "@startuml\nabstract class Animal\ninterface Soundable {\n  +speak(): String\n}\nclass Dog\nclass Cat\nAnimal <|-- Dog\nAnimal <|-- Cat\nSoundable <|.. Dog\nSoundable <|.. Cat\n@enduml"
+  },
+  {
+    "id": 18,
+    "title": "問い合わせ対応フロー",
+    "theme": "アクティビティ図",
+    "prompt": "問い合わせを受け、FAQで解決可能なら回答し、難しければ担当者に転送する。",
+    "uml": "@startuml\nstart\n:Receive inquiry;\nif (Known answer?) then (yes)\n  :Reply from FAQ;\nelse (no)\n  :Escalate to staff;\n  :Staff replies;\nendif\nstop\n@enduml"
+  },
+  {
+    "id": 19,
+    "title": "レビュー承認の状態図",
+    "theme": "状態図",
+    "prompt": "DraftからReviewに進み、承認ならPublished、却下ならDraftに戻す。",
+    "uml": "@startuml\n[*] --> Draft\nDraft --> Review : submit\nReview --> Published : approve\nReview --> Draft : request changes\nPublished --> [*]\n@enduml"
+  },
+  {
+    "id": 20,
+    "title": "システム境界とユースケース",
+    "theme": "ユースケース図",
+    "prompt": "購入者は商品閲覧と購入を行い、管理者は商品登録を行う。",
+    "uml": "@startuml\nleft to right direction\nactor Buyer\nactor Administrator\nrectangle Shop {\n  (Browse items) as Browse\n  (Purchase) as Buy\n  (Manage products) as Manage\n}\nBuyer --> Browse\nBuyer --> Buy\nAdministrator --> Manage\n@enduml"
+  }
+]
